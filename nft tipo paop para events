@@ -1,0 +1,51 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
+
+contract CeloERC1155 is ERC1155, Ownable {
+    uint256 public constant GOLD = 0; // Fungible token example
+    uint256 public constant SWORD = 1; // NFT-like token
+    uint256 public constant SHIELD = 2; // Another token type
+
+    uint256 public mintPrice = 0.001 ether; // CELO required per mint
+
+    constructor() ERC1155("https://metadata.example.com/tokens/ {id}.json") {}
+
+    /**
+     * @dev Mint one token of specified type
+     */
+    function mint(
+        address account,
+        uint256 id,
+        uint256 amount
+    ) public payable {
+        require(msg.value >= mintPrice, "Not enough CELO sent");
+        _mint(account, id, amount, "");
+    }
+
+    /**
+     * @dev Mint multiple tokens at once
+     */
+    function batchMint(
+        address account,
+        uint256[] memory ids,
+        uint256[] memory amounts
+    ) public payable {
+        require(msg.value >= mintPrice * ids.length, "Not enough CELO sent");
+        _mintBatch(account, ids, amounts, "");
+    }
+
+    /**
+     * @dev Withdraw balance to owner wallet
+     */
+    function withdraw() external onlyOwner {
+        uint256 balance = address(this).balance;
+        payable(owner()).transfer(balance);
+    }
+
+    /**
+     * @dev Override URI if needed dynamically
+     */
+    function
