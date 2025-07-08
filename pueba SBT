@@ -1,0 +1,61 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
+
+/**
+ * @title SoulboundToken - Non-Transferable ERC721 Token
+ * @dev This token cannot be transferred once minted.
+ */
+contract SoulboundToken is ERC721, Ownable {
+    uint256 private _currentTokenId = 0;
+
+    // Prevent transfers by overriding transfer functions
+    function _beforeTokenTransfer(
+        address from,
+        address to,
+        uint256 tokenId
+    ) internal virtual override {
+        require(from == address(0) || to == address(0), "Soulbound: Can't transfer token");
+        super._beforeTokenTransfer(from, to, tokenId);
+    }
+
+    constructor() ERC721("SoulboundToken", "SBT") {}
+
+    /**
+     * @dev Mint a new Soulbound Token
+     * @param to Address to mint the token to
+     */
+    function mint(address to) external onlyOwner {
+        uint256 tokenId = _currentTokenId;
+        _currentTokenId += 1;
+        _safeMint(to, tokenId);
+    }
+
+    /**
+     * @dev Set token metadata URI
+     * @param tokenURI_ Metadata URI for the token
+     */
+    function setTokenURI(uint256 tokenId, string memory tokenURI_) external onlyOwner {
+        _setTokenURI(tokenId, tokenURI_);
+    }
+
+    /**
+     * @dev Base URI for metadata
+     */
+    function _baseURI() internal pure override returns (string memory) {
+        return "https://metadata.example.com/souls/ ";
+    }
+
+    /**
+     * @dev Disable approvals since token is soulbound
+     */
+    function approve(address to, uint256 tokenId) public virtual override {
+        revert("Soulbound: Cannot approve transfer");
+    }
+
+    function setApprovalForAll(address operator, bool approved) public virtual override {
+        revert("Soulbound: Cannot approve operators");
+    }
+}
