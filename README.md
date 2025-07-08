@@ -1,63 +1,156 @@
-🌟 Celo Mexico Smart Contracts Repository 🌟
-🌐 Welcome to the Celo Mexico Smart Contracts Repo! 🌐
-Hey there, fellow Celo enthusiasts! 🚀
-This repo is your one-stop-shop for all things smart contracts on the Celo network. Whether you're a seasoned developer or just dipping your toes into the world of blockchain, you'll find everything you need here. 🌊
-📚 About This Repo 📚
-This repository is dedicated to saving and sharing smart contracts for the Celo network. It's a place where you can find contracts ready for production, as well as those in the testing phase. Think of it as a treasure trove of code, ready to be deployed and make the world a better place! 🌟
-🛠️ Features 🛠️
-Production-Ready Contracts: 🏗️
-We've got contracts that are battle-tested and ready to go live on the Celo network.
-These contracts are optimized for performance and security, so you can trust them to handle your transactions smoothly.
-Testing Contracts: 🧪
-For those who love to experiment, we've got a collection of contracts in the testing phase.
-These contracts are perfect for trying out new ideas and seeing how they perform in a controlled environment.
-Documentation: 📝
-Each contract comes with detailed documentation, so you know exactly what it does and how to use it.
-No more guessing games! 🎯
-🎯 Getting Started 🎯
-Prerequisites
-Node.js: Make sure you have Node.js installed. You can download it from nodejs.org. 🌐
-Truffle: We use Truffle for our smart contract development. Install it using npm install -g truffle. 🌱
-Celo CLI: Get the Celo CLI by running npm install -g @celo/cli. 📱
-Installation
-Clone this repo:
+📁 Repository: Celo-Mexico/SC
+🛡️ Celo México Smart Contracts Hub 🛠️
+🔥 ¡Smart Contracts para todos! Bienvenido al laboratorio de magia blockchain de Celo México 💥
+Aquí probamos, construimos y lanzamos contratos inteligentes en la red Celo 🌐
+¡Todo listo para producción y testing! 🧪🚀 
+
+🟡 This repo is full of spicy smart contracts, tested with love (and some gas). Use it as a playground or deploy-ready treasure chest 🏴‍☠️
+
+📦 What’s Inside?
+✅ Production-ready smart contracts 🚀
+🧪 Testing contracts & scripts (for local & Alfajores) 🧬
+📁 Modular structure for easy reuse 🔄
+📜 Solidity-based, optimized for Celo 🌱
+🎉 Nerdy comments & spicy Easter eggs 🌶️🥚
+🚨 Warning:
+This code might contain: 
+
+🌵 Mexican spice levels
+🧠 Nerdy puns
+💥 Unexpected emitions
+🌟 Yellow emojis everywhere ⚠️
+Use at your own risk 🤙
+
+🧰 Setup Instructions
+1. Clone the repo
 bash
-Copy
-git clone https://github.com/Celo-Mexico/smart-contracts.git
-Navigate to the repo directory:
+
+
+1
+2
+git clone https://github.com/Celo-Mexico/SC.git 
+cd SC
+2. Install dependencies
 bash
-Copy
-cd smart-contracts
-Install dependencies:
-bash
-Copy
+
+
+1
 npm install
-Running Tests
-To run the tests, simply execute:
+or if you're fancy:
+
 bash
-Copy
-npm test
-This will run all the tests in the test directory. 🧪
-Deploying to Production
-Once you're ready to deploy your contract to the Celo network, use the following command:
+
+
+1
+yarn install
+3. Compile contracts
 bash
-Copy
-truffle migrate --network celo
-Make sure you have your Celo network configuration set up in the truffle-config.js file. 🚀
-🤝 Contributing 🤝
-We love contributions! If you have a smart contract you think would be a great addition to this repo, feel free to submit a pull request. 🙌
-Steps to Contribute
-Fork the repo.
-Create your feature branch (git checkout -b feature/YourFeature).
-Commit your changes (git commit -m 'Add some feature').
-Push to the branch (git push origin feature/YourFeature).
-Open a pull request.
-📝 License 📝
-This project is licensed under the MIT License. See the LICENSE file for details.
-🌟 Fun Facts 🌟
-Did you know that Celo is named after the Greek word for "swarm"? 🐝
-The Celo network is designed to be fast and efficient, making it perfect for real-world applications. 🚀
-We love emojis! 🌟
-🎉 Enjoy! 🎉
-Happy coding, and may your smart contracts always be bug-free! 🌟
-Feel free to reach out if you have any questions or need help. We're here to support you on your Celo journey! 🚀
+
+
+1
+npx hardhat compile
+4. Run tests
+For local testing:
+
+bash
+
+
+1
+npx hardhat test
+Want to use Alfajores ? Set up your .env file with your private key and RPC URL 📝
+
+🚀 Deploying to Celo
+We support both Alfajores and Mainnet 🌐
+Check out /scripts/deploy.js for deployment templates.
+Customize them like you're making tacos 🌮 — no two deployments are the same!
+
+🧑‍💻 Contributing
+Got a contract that brings 🔥 to the table?
+PRs welcome! Just make sure to add spicy comments and yellow emojis 😎
+Tag us on Twitter/X: @CeloMexico
+
+📜 License
+MIT — Do what you want, just don’t blame us if your contract explodes 🧨
+(But please do contribute fixes!)
+
+🌟 Shoutouts
+Built with ❤️ by Celo México
+Made for developers who like their contracts smart and their memes smarter 🧠😂
+
+🛡️ Smart Contracts Hub for Celo México 🛠️
+🔥 ¡Smart Contracts para todos! Bienvenido al laboratorio de magia blockchain de Celo México 💥
+Aquí probamos, construimos y lanzamos contratos inteligentes en la red Celo 🌐
+¡Todo listo para producción y testing! 🧪🚀 
+
+🟡 Este repo está lleno de contratos inteligentes picosos, probados con amor (y algo de gas). Úsalo como parque infantil o como cofre del tesoro listo para desplegar 🏴‍☠️
+
+📦 ¿Qué hay aquí?
+✅ Contratos listos para producción 🚀
+🧪 Contratos y scripts de prueba (para local y Alfajores) 🧬
+📁 Estructura modular para reutilizar fácilmente 🔄
+📜 Basado en Solidity, optimizado para Celo 🌱
+🎉 Comentarios nerds y huevos de pascua 🌶️🥚
+🚨 Advertencia:
+Este código podría contener: 
+
+🌵 Nivel de picante mexicano
+🧠 Chistes nerds
+💥 emit inesperados
+🌟 Emojis amarillos por todos lados ⚠️
+¡Úsalo bajo tu propio riesgo! 🤙
+
+🧰 Instrucciones de configuración
+1. Clona el repositorio
+bash
+
+
+1
+2
+git clone https://github.com/Celo-Mexico/SC.git 
+cd SC
+2. Instala las dependencias
+bash
+
+
+1
+npm install
+o si eres más avanzado:
+
+bash
+
+
+1
+yarn install
+3. Compila los contratos
+bash
+
+
+1
+npx hardhat compile
+4. Ejecuta las pruebas
+Para pruebas locales:
+
+bash
+
+
+1
+npx hardhat test
+¿Quieres usar Alfajores ? Configura tu archivo .env con tu llave privada y la URL del RPC 📝
+
+🚀 Desplegando en Celo
+Soportamos tanto Alfajores como Mainnet 🌐
+Revisa /scripts/deploy.js para plantillas de despliegue.
+Personalízalas como si estuvieras haciendo tacos 🌮 — ¡ningún despliegue es igual!
+
+🧑‍💻 Contribuyendo
+¿Tienes un contrato que le da 🔥 al proyecto?
+¡Las PRs son bienvenidas! Solo asegúrate de agregar comentarios picantes y emojis amarillos 😎
+¡Mencióname en Twitter/X: @CeloMexico
+
+📜 Licencia
+MIT — Haz lo que quieras, pero no nos culpes si tu contrato explota 🧨
+(Pero por favor corrige los errores si puedes)
+
+🌟 Reconocimientos
+Construido con ❤️ por Celo México
+Hecho para desarrolladores que quieren contratos inteligentes y memes aún más inteligentes 🧠😂
