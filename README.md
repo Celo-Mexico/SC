@@ -1,156 +1,121 @@
-📁 Repository: Celo-Mexico/SC
 🛡️ Celo México Smart Contracts Hub 🛠️
-🔥 ¡Smart Contracts para todos! Bienvenido al laboratorio de magia blockchain de Celo México 💥
-Aquí probamos, construimos y lanzamos contratos inteligentes en la red Celo 🌐
-¡Todo listo para producción y testing! 🧪🚀 
+🔥 “Contratos Inteligentes con Sabor a México” 🌮
+🟡 ¡Bienvenido al laboratorio más picoso del ecosistema Celo! 🧪
+Aquí guardamos contratos listos para producción, testing, y despliegue directo a la blockchain.
 
-🟡 This repo is full of spicy smart contracts, tested with love (and some gas). Use it as a playground or deploy-ready treasure chest 🏴‍☠️
+🎯 Este repositorio es el corazón de los experimentos, prototipos y soluciones reales que construimos para Celo México. 
 
-📦 What’s Inside?
-✅ Production-ready smart contracts 🚀
-🧪 Testing contracts & scripts (for local & Alfajores) 🧬
-📁 Modular structure for easy reuse 🔄
-📜 Solidity-based, optimized for Celo 🌱
-🎉 Nerdy comments & spicy Easter eggs 🌶️🥚
-🚨 Warning:
-This code might contain: 
-
-🌵 Mexican spice levels
-🧠 Nerdy puns
-💥 Unexpected emitions
-🌟 Yellow emojis everywhere ⚠️
-Use at your own risk 🤙
-
-🧰 Setup Instructions
-1. Clone the repo
-bash
-
-
-1
-2
-git clone https://github.com/Celo-Mexico/SC.git 
-cd SC
-2. Install dependencies
-bash
-
-
-1
-npm install
-or if you're fancy:
-
-bash
-
-
-1
-yarn install
-3. Compile contracts
-bash
-
-
-1
-npx hardhat compile
-4. Run tests
-For local testing:
-
-bash
-
-
-1
-npx hardhat test
-Want to use Alfajores ? Set up your .env file with your private key and RPC URL 📝
-
-🚀 Deploying to Celo
-We support both Alfajores and Mainnet 🌐
-Check out /scripts/deploy.js for deployment templates.
-Customize them like you're making tacos 🌮 — no two deployments are the same!
-
-🧑‍💻 Contributing
-Got a contract that brings 🔥 to the table?
-PRs welcome! Just make sure to add spicy comments and yellow emojis 😎
-Tag us on Twitter/X: @CeloMexico
-
-📜 License
-MIT — Do what you want, just don’t blame us if your contract explodes 🧨
-(But please do contribute fixes!)
-
-🌟 Shoutouts
-Built with ❤️ by Celo México
-Made for developers who like their contracts smart and their memes smarter 🧠😂
-
-🛡️ Smart Contracts Hub for Celo México 🛠️
-🔥 ¡Smart Contracts para todos! Bienvenido al laboratorio de magia blockchain de Celo México 💥
-Aquí probamos, construimos y lanzamos contratos inteligentes en la red Celo 🌐
-¡Todo listo para producción y testing! 🧪🚀 
-
-🟡 Este repo está lleno de contratos inteligentes picosos, probados con amor (y algo de gas). Úsalo como parque infantil o como cofre del tesoro listo para desplegar 🏴‍☠️
-
-📦 ¿Qué hay aquí?
-✅ Contratos listos para producción 🚀
-🧪 Contratos y scripts de prueba (para local y Alfajores) 🧬
-📁 Estructura modular para reutilizar fácilmente 🔄
-📜 Basado en Solidity, optimizado para Celo 🌱
-🎉 Comentarios nerds y huevos de pascua 🌶️🥚
+📦 ¿Qué encontrarás aquí?
+✅ Contratos inteligentes listos para producción 🚀
+🧪 Contratos de prueba para Alfajores y Hardhat 🧬
+📁 Estructura modular y reusable 🔄
+📜 Solidity + Hardhat + amor mexicano 💖
+🎉 Easter eggs, memes y comentarios nerds 🌶️🥚
 🚨 Advertencia:
-Este código podría contener: 
+Este repo puede contener: 
 
-🌵 Nivel de picante mexicano
-🧠 Chistes nerds
-💥 emit inesperados
-🌟 Emojis amarillos por todos lados ⚠️
-¡Úsalo bajo tu propio riesgo! 🤙
-
-🧰 Instrucciones de configuración
-1. Clona el repositorio
+🌵 Nivel de picante mexicano extremo
+🧠 Chistes sobre bytes32 y gas
+💥 Emojis amarillos por doquier 🟡
+🤖 Código tan limpio como mi abuela limpia su cocina
+🧰 Setup Rápido
 bash
 
 
 1
 2
+3
+4
+5
 git clone https://github.com/Celo-Mexico/SC.git 
 cd SC
-2. Instala las dependencias
-bash
-
-
-1
 npm install
-o si eres más avanzado:
-
-bash
-
-
-1
-yarn install
-3. Compila los contratos
-bash
-
-
-1
 npx hardhat compile
-4. Ejecuta las pruebas
-Para pruebas locales:
-
-bash
-
-
-1
 npx hardhat test
-¿Quieres usar Alfajores ? Configura tu archivo .env con tu llave privada y la URL del RPC 📝
+🔧 Configura tu .env para pruebas en Alfajores o Mainnet.
 
-🚀 Desplegando en Celo
-Soportamos tanto Alfajores como Mainnet 🌐
-Revisa /scripts/deploy.js para plantillas de despliegue.
-Personalízalas como si estuvieras haciendo tacos 🌮 — ¡ningún despliegue es igual!
+🚀 Despliegues
+Soportamos:
 
-🧑‍💻 Contribuyendo
-¿Tienes un contrato que le da 🔥 al proyecto?
-¡Las PRs son bienvenidas! Solo asegúrate de agregar comentarios picantes y emojis amarillos 😎
-¡Mencióname en Twitter/X: @CeloMexico
+🧪 Alfajores Testnet
+🌐 Celo Mainnet
+👉 Scripts listos en /scripts/deploy.js
+🌮 Personaliza tus despliegues como si fueran tacos (nadie hace dos iguales)
 
+🧑‍💻 Contribuye con sabor
+¿Tienes un contrato que haga explotar este repo?
+¡PRs son bienvenidas! Solo asegúrate de seguir estas reglas:
+
+Usa comentarios picantes 🌶️
+Añade emojis amarillos 🟡
+No uses var ❌
+Si haces meme, hazlo bien hecho 😎
 📜 Licencia
-MIT — Haz lo que quieras, pero no nos culpes si tu contrato explota 🧨
+MIT — Haz lo que quieras, pero no nos culpes si tu contrato falla 🧨
 (Pero por favor corrige los errores si puedes)
 
-🌟 Reconocimientos
-Construido con ❤️ por Celo México
-Hecho para desarrolladores que quieren contratos inteligentes y memes aún más inteligentes 🧠😂
+🌟 Hecho con ❤️ por Celo México
+Twitter/X: @CeloMexico
+Discord: Únete a nuestra comunidad 🧑‍🤝‍🧑
+GitHub: github.com/Celo-Mexico
+
+🛡️ Celo México Smart Contracts Hub 🛠️
+🔥 "Contratos Inteligentes con Sabor a México" 🌮
+🟡 ¡Bienvenido al laboratorio más picoso del ecosistema Celo! 🧪
+Aquí guardamos contratos listos para producción, testing, y despliegue directo a la blockchain.
+
+🎯 Este repositorio es el corazón de los experimentos, prototipos y soluciones reales que construimos para Celo México. 
+
+📦 ¿Qué encontrarás aquí?
+✅ Contratos inteligentes listos para producción 🚀
+🧪 Contratos de prueba para Alfajores y Hardhat 🧬
+📁 Estructura modular y reusable 🔄
+📜 Solidity + Hardhat + amor mexicano 💖
+🎉 Easter eggs, memes y comentarios nerds 🌶️🥚
+🚨 Advertencia:
+Este repo puede contener: 
+
+🌵 Nivel de picante mexicano extremo
+🧠 Chistes sobre bytes32 y gas
+💥 Emojis amarillos por doquier 🟡
+🤖 Código tan limpio como mi abuela limpia su cocina
+🧰 Setup Rápido
+bash
+
+
+1
+2
+3
+4
+5
+git clone https://github.com/Celo-Mexico/SC.git 
+cd SC
+npm install
+npx hardhat compile
+npx hardhat test
+🔧 Configura tu .env para pruebas en Alfajores o Mainnet.
+
+🚀 Despliegues
+Soportamos:
+
+🧪 Alfajores Testnet
+🌐 Celo Mainnet
+👉 Scripts listos en /scripts/deploy.js
+🌮 Personaliza tus despliegues como si fueran tacos (nadie hace dos iguales)
+
+🧑‍💻 Contribuye con sabor
+¿Tienes un contrato que haga explotar este repo?
+¡PRs son bienvenidas! Solo asegúrate de seguir estas reglas:
+
+Usa comentarios picantes 🌶️
+Añade emojis amarillos 🟡
+No uses var ❌
+Si haces meme, hazlo bien hecho 😎
+📜 Licencia
+MIT — Haz lo que quieras, pero no nos culpes si tu contrato falla 🧨
+(Pero por favor corrige los errores si puedes)
+
+🌟 Hecho con ❤️ por Celo México
+Twitter/X: @CeloMexico
+Discord: Únete a nuestra comunidad 🧑‍🤝‍🧑
+GitHub: github.com/Celo-Mexico
