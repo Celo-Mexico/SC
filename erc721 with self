@@ -1,0 +1,56 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
+
+/**
+ * @title SelfSBTNFT - Soulbound Token compatible with Self Protocol
+ * @dev This token cannot be transferred once minted (soulbound).
+ */
+contract SelfSBTNFT is ERC721, Ownable {
+    uint256 private _tokenIdCounter = 0;
+
+    // Optional: Register your attester schema here
+    string public constant ATTESTER_DID = "did:self:abc..."; // Replace with your attester DID
+    string public constant SCHEMA_UID = "0x..."; // Schema UID from Self Protocol
+
+    event Attested(address indexed subject, uint256 tokenId, string attesterDID, string schemaUID);
+
+    constructor() ERC721("SelfSBTNFT", "SELF") {}
+
+    /**
+     * @dev Mint a soulbound token to an address
+     * @param to Address to receive the token
+     */
+    function mint(address to) external onlyOwner {
+        uint256 tokenId = _tokenIdCounter;
+        _tokenIdCounter += 1;
+        _safeMint(to, tokenId);
+
+        emit Attested(to, tokenId, ATTESTER_DID, SCHEMA_UID);
+    }
+
+    /**
+     * @dev Prevent transfers
+     */
+    function _beforeTokenTransfer(
+        address from,
+        address to,
+        uint256 tokenId
+    ) internal virtual override {
+        require(from == address(0), "Soulbound: Can't transfer token");
+        super._beforeTokenTransfer(from, to, tokenId);
+    }
+
+    /**
+     * @dev Disable approvals since token is soulbound
+     */
+    function approve(address to, uint256 tokenId) public virtual override {
+        revert("Soulbound: Cannot approve transfer");
+    }
+
+    function setApprovalForAll(address operator, bool approved) public virtual override {
+        revert("Soulbound: Cannot approve operators");
+    }
+}
