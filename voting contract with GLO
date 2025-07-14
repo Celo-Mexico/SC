@@ -1,0 +1,112 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.19;
+
+import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
+import "@openzeppelin/contracts/utils/math/SafeCast.sol";
+
+contract GloDAOGovernance {
+    using SafeERC20 for IERC20;
+    using SafeCast for int256;
+
+    struct Proposal {
+        string description;
+        uint40 voteStart;
+        uint40 voteEnd;
+        uint256 votesFor;
+        uint256 votesAgainst;
+        bool executed;
+    }
+
+    IERC20 public immutable governanceToken; // cUSD token address
+    Proposal[] public proposals;
+    mapping(uint256 => mapping(address => bool)) public hasVoted;
+
+    event ProposalCreated(uint256 indexed proposalId, string description);
+    event Voted(
+        uint256 indexed proposalId,
+        address indexed voter,
+        bool indexed support,
+        uint256 votes
+    );
+    event ProposalExecuted(uint256 indexed proposalId);
+
+    constructor(address _governanceToken) {
+        governanceToken = IERC20(_governanceToken);
+    }
+
+    function createProposal(string memory _description, uint40 _votingPeriodInDays)
+        external
+    {
+        require(bytes(_description).length > 0, "Propuesta vacía");
+
+        uint40 nowTime = uint40(block.timestamp);
+        uint40 votingEnd = nowTime + (_votingPeriodInDays * 1 days);
+
+        proposals.push(
+            Proposal({
+                description: _description,
+                voteStart: nowTime,
+                voteEnd: votingEnd,
+                votesFor: 0,
+                votesAgainst: 0,
+                executed: false
+            })
+        );
+
+        emit ProposalCreated(proposals.length - 1, _description);
+    }
+
+    function vote(uint256 proposalId, bool support) external {
+        Proposal storage proposal = proposals[proposalId];
+        require(block.timestamp >= proposal.voteStart, "Todavía no empieza la votación");
+        require(block.timestamp <= proposal.voteEnd, "La votación ya terminó");
+        require(!hasVoted[proposalId][msg.sender], "Ya votaste");
+
+        uint256 balance = governanceToken.balanceOf(msg.sender);
+        require(balance > 0, "No tienes cUSD para votar");
+
+        if (support) {
+            proposal.votesFor += balance;
+        } else {
+            proposal.votesAgainst += balance;
+        }
+
+        hasVoted[proposalId][msg.sender] = true;
+
+        emit Voted(proposalId, msg.sender, support, balance);
+    }
+
+    function executeProposal(uint256 proposalId) external {
+        Proposal storage proposal = proposals[proposalId];
+        require(!proposal.executed, "Ya ejecutada");
+        require(block.timestamp > proposal.voteEnd, "Todavía en periodo de votación");
+
+        uint256 totalVotes = proposal.votesFor + proposal.votesAgainst;
+        require(totalVotes > 0, "Sin votos");
+
+        if (proposal.votesFor > proposal.votesAgainst) {
+            // Aquí puedes insertar lógica custom para ejecutar acciones DAO
+            // Por ejemplo: transferir fondos, actualizar parámetros, etc.
+        }
+
+        proposal.executed = true;
+        emit ProposalExecuted(proposalId);
+    }
+
+    function getProposalCount() external view returns (uint256) {
+        return proposals.length;
+    }
+
+    function getProposalResult(uint256 proposalId)
+        external
+        view
+        returns (
+            uint256 votesFor,
+            uint256 votesAgainst,
+            bool executed
+        )
+    {
+        Proposal storage proposal = proposals[proposalId];
+        return (proposal.votesFor, proposal.votesAgainst, proposal.executed);
+    }
+}
