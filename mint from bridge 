@@ -1,0 +1,7 @@
+// En Celo
+WrappedToken celoToken = WrappedToken(0xWrappedTokenOnCelo);
+celoToken.burn(100e18); // El usuario quema sus tokens
+
+// En Ethereum
+WrappedToken ethToken = WrappedToken(0xWrappedTokenOnEthereum);
+ethToken.mint(userAddress, 100e18); // El bridge llama mint
