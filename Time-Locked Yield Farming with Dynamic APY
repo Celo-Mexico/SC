@@ -1,0 +1,132 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.20;
+
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
+import "@openzeppelin/contracts/utils/math/SafeMath.sol";
+
+contract DynamicYieldFarm {
+    using SafeMath for uint256;
+    using SafeERC20 for IERC20;
+
+    // === STATE VARIABLES ===
+    IERC20 public stakeToken;
+    IERC20 public rewardToken;
+
+    uint256 public baseAPY = 500; // 5% base APY in basis points (100 = 1%)
+    uint256 public lastUpdateTimestamp;
+    uint256 public totalStaked;
+
+    struct UserInfo {
+        uint256 amount; // Amount staked
+        uint256 startTime; // When user started staking
+        uint256 unclaimedRewards;
+    }
+
+    mapping(address => UserInfo) public users;
+
+    event Staked(address indexed user, uint256 amount);
+    event RewardsClaimed(address indexed user, uint256 amount);
+    event Unstaked(address indexed user, uint256 amount);
+
+    // === CONSTRUCTOR ===
+    constructor(address _stakeToken, address _rewardToken) {
+        stakeToken = IERC20(_stakeToken);
+        rewardToken = IERC20(_rewardToken);
+        lastUpdateTimestamp = block.timestamp;
+    }
+
+    // === STAKING FUNCTION ===
+    function stake(uint256 amount) external {
+        require(amount > 0, "Cannot stake 0");
+
+        updatePool();
+
+        UserInfo storage user = users[msg.sender];
+        if (user.amount > 0) {
+            uint256 pending = calculateRewards(msg.sender);
+            user.unclaimedRewards = user.unclaimedRewards.add(pending);
+        }
+
+        stakeToken.safeTransferFrom(msg.sender, address(this), amount);
+        user.amount = user.amount.add(amount);
+        user.startTime = block.timestamp;
+
+        totalStaked = totalStaked.add(amount);
+
+        emit Staked(msg.sender, amount);
+    }
+
+    // === CLAIM REWARDS ===
+    function claimRewards() external {
+        updatePool();
+        uint256 pending = calculateRewards(msg.sender);
+        UserInfo storage user = users[msg.sender];
+
+        uint256 totalReward = user.unclaimedRewards.add(pending);
+        require(totalReward > 0, "No rewards to claim");
+
+        user.unclaimedRewards = 0;
+        rewardToken.safeTransfer(msg.sender, totalReward);
+
+        emit RewardsClaimed(msg.sender, totalReward);
+    }
+
+    // === UNSTAKE & CLAIM ===
+    function unstake() external {
+        UserInfo storage user = users[msg.sender];
+        require(user.amount > 0, "No stake found");
+
+        updatePool();
+        uint256 pending = calculateRewards(msg.sender);
+        uint256 totalReward = user.unclaimedRewards.add(pending);
+
+        stakeToken.safeTransfer(msg.sender, user.amount);
+        rewardToken.safeTransfer(msg.sender, totalReward);
+
+        totalStaked = totalStaked.sub(user.amount);
+
+        emit Unstaked(msg.sender, user.amount);
+        emit RewardsClaimed(msg.sender, totalReward);
+
+        user.amount = 0;
+        user.unclaimedRewards = 0;
+        user.startTime = 0;
+    }
+
+    // === DYNAMIC APY LOGIC ===
+    function calculateRewards(address user) public view returns (uint256) {
+        UserInfo memory userInfo = users[user];
+        if (userInfo.amount == 0) return 0;
+
+        uint256 secondsStaked = block.timestamp.sub(userInfo.startTime);
+        uint256 daysStaked = secondsStaked.div(1 days);
+
+        // Base rate: APY per year
+        uint256 apy = getDynamicAPY();
+
+        // Reward formula: (amount * APY / 365) * daysStaked / 1e4 (basis point division)
+        uint256 reward = userInfo.amount.mul(apy).mul(daysStaked).div(365 * 1e4);
+
+        return reward;
+    }
+
+    function getDynamicAPY() public view returns (uint256) {
+        // Example: Higher liquidity = lower APY (to balance incentives)
+        uint256 scalingFactor = 1e18; // Adjust based on your token decimals
+        uint256 inverseLiquidity = scalingFactor.mul(1e12).div(totalStaked + 1); // Avoid div by zero
+
+        // APY scales inversely with total staked (you can flip this logic too!)
+        uint256 dynamicAPY = baseAPY.mul(inverseLiquidity).div(scalingFactor);
+
+        return dynamicAPY;
+    }
+
+    function updatePool() internal {
+        uint256 timeElapsed = block.timestamp.sub(lastUpdateTimestamp);
+        if (timeElapsed > 0 && totalStaked > 0) {
+            // You could add logic here to adjust baseAPY over time
+        }
+        lastUpdateTimestamp = block.timestamp;
+    }
+}
